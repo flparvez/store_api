@@ -36,7 +36,7 @@ fastify.register(cors, {
 });
 const start  = async () => {
     
-    await connectDB(process.env.MONGO_URI);
+    await connectDB('mongodb+srv://movie:dbpass23@movieapp.7r02l6q.mongodb.net/fast-store');
  
     fastify.get('/', function (request, reply) {
         reply.type('text/html').send(html)
