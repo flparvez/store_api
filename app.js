@@ -1,13 +1,13 @@
 import "dotenv/config";
 import Fastify from 'fastify';
 import {connectDB} from './src/config/connect.js';
-
+import cors from "@fastify/cors";
 import todosRoutes from "./src/routes/todo.routes.js";
 import categoryRoutes from "./src/routes/category.routes.js";
 import productsRoutes from "./src/routes/product.routes.js";
 import orderRoutes from "./src/routes/order.routes.js";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
 
 const fastify = Fastify({ logger: true });
@@ -17,7 +17,23 @@ fastify.register(todosRoutes,{prefix:"/api"});
 fastify.register(categoryRoutes,{prefix:"/api"});
 fastify.register(productsRoutes,{prefix:"/api"});
 fastify.register(orderRoutes,{prefix:"/api"});
+// List of allowed origins
+const allowedOrigins = ['http://localhost:3000' , 'https://uniquestorebd.vercel.app/'];
 
+fastify.register(cors, {
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      // Request from allowed origin will pass
+      cb(null, true);
+    } else {
+      // Generate an error on other origins, disabling access
+      cb(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Define allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Define allowed headers
+  credentials: true, // Allow cookies to be sent
+});
 const start  = async () => {
     
     await connectDB(process.env.MONGO_URI);
