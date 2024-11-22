@@ -1,11 +1,11 @@
 import "dotenv/config";
 import Fastify from 'fastify';
-import {connectDB} from './src/config/connect.js';
+import {connectDB} from './config/connect.js';
 import cors from "@fastify/cors";
-import todosRoutes from "./src/routes/todo.routes.js";
-import categoryRoutes from "./src/routes/category.routes.js";
-import productsRoutes from "./src/routes/product.routes.js";
-import orderRoutes from "./src/routes/order.routes.js";
+import todosRoutes from "./routes/todo.routes.js";
+import categoryRoutes from "./routes/category.routes.js";
+import productsRoutes from "./routes/product.routes.js";
+import orderRoutes from "./routes/order.routes.js";
 
 const port = process.env.PORT || 4000;
 const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
