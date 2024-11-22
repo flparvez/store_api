@@ -13,6 +13,7 @@ const ProductSchema = new mongoose.Schema(
       required: true,
     },
     price: { type: Number, required: true },
+    mprice: { type: Number, required: true },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
@@ -24,6 +25,7 @@ const ProductSchema = new mongoose.Schema(
     stock: { type: Number, required: true, default: 0 },
     sold: { type: Number, default: 0 },
     tags: [{ type: String }],
+    warrenty: [{ type: String }],
   },
   { timestamps: true }
 );
