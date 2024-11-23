@@ -1,6 +1,6 @@
 import {Category} from '../models/category.models.js';
 
-async function getAllCategories(request, reply) {
+export async function getAllCategories(request, reply) {
   try {
     const categories = await Category.find();
     reply.send(categories);
@@ -8,21 +8,20 @@ async function getAllCategories(request, reply) {
     reply.status(500).send(error);
   }
 }
-
-async function getCategoryById(request, reply) {
+// Get category by slug
+export async function getCategoryBySlug(request, reply) {
   try {
-    const category = await Category.findById(request.params.id);
+    const category = await Category.findOne({ slug: request.params.slug });
     if (!category) {
       reply.status(404).send({ message: 'Category not found' });
     } else {
       reply.send(category);
     }
   } catch (error) {
-    reply.status(500).send(error);
+    reply.status(500).send({ message: error.message });
   }
 }
-
-async function createCategory(request, reply) {
+export async function createCategory(request, reply) {
   try {
     const category = new Category(request.body);
     const result = await category.save();
@@ -32,7 +31,7 @@ async function createCategory(request, reply) {
   }
 }
 
-async function updateCategory(request, reply) {
+export async function updateCategory(request, reply) {
   try {
     const category = await Category.findByIdAndUpdate(request.params.id, request.body, { new: true });
     if (!category) {
@@ -45,7 +44,7 @@ async function updateCategory(request, reply) {
   }
 }
 
-async function deleteCategory(request, reply) {
+export async function deleteCategory(request, reply) {
   try {
     const category = await Category.findByIdAndDelete(request.params.id);
     if (!category) {
@@ -58,4 +57,4 @@ async function deleteCategory(request, reply) {
   }
 }
 
-export { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory };
+
