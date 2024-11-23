@@ -13,7 +13,7 @@ const host = ("VERCEL" in process.env) ? `0.0.0.0` : `localhost`;
 const fastify = Fastify({ logger: true });
 
 // List of allowed origins
-const allowedOrigins = ['http://localhost:3000', 'https://uniquestorebd.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://uniquestorebd.vercel.app','https://uniquestoreb.vercel.app'];
 
 fastify.register(cors, {
   origin: (origin, cb) => {
