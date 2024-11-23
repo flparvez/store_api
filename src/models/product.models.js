@@ -24,8 +24,8 @@ const ProductSchema = new mongoose.Schema(
     video: { type: String },
     stock: { type: Number, required: true, default: 0 },
     sold: { type: Number, default: 0 },
-    tags: [{ type: String }],
-    warrenty: [{ type: String }],
+    tags: { type: String },
+    warrenty: { type: String },
   },
   { timestamps: true }
 );
