@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 
 const categorySchema= new mongoose.Schema({
-    title: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true },
+    image: { type: String, required: true },
     slug: { type: String, unique: true },
 },{timestamps: true});
 
@@ -11,8 +12,8 @@ const categorySchema= new mongoose.Schema({
 
 // Pre-save hook to generate slug from name
 categorySchema.pre('save', async function(next) {
-    if (this.isModified('title')) {
-      this.slug = slugify(this.title, { lower: true, strict: true });
+    if (this.isModified('name')) {
+      this.slug = slugify(this.name, { lower: true, strict: true });
   
       // Ensure slug is unique
       const slugExists = await mongoose.models.Category.findOne({ slug: this.slug });
