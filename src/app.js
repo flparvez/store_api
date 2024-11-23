@@ -2,7 +2,7 @@ import 'dotenv/config';
 import Fastify from 'fastify';
 import { connectDB } from './config/connect.js';
 import cors from '@fastify/cors';
-import todosRoutes from './routes/todo.routes.js';
+
 import categoryRoutes from './routes/category.routes.js';
 import productsRoutes from './routes/product.routes.js';
 import orderRoutes from './routes/order.routes.js';
@@ -31,7 +31,7 @@ fastify.register(cors, {
 });
 
 // Register routes
-fastify.register(todosRoutes, { prefix: '/api' });
+
 fastify.register(categoryRoutes, { prefix: '/api' });
 fastify.register(productsRoutes, { prefix: '/api' });
 fastify.register(orderRoutes, { prefix: '/api' });
