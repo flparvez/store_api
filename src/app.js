@@ -1,6 +1,6 @@
-import "dotenv/config";
+import 'dotenv/config';
 import Fastify from 'fastify';
-import {connectDB} from './config/connect.js';
+import { connectDB } from './config/connect.js';
 import cors from "@fastify/cors";
 import todosRoutes from "./routes/todo.routes.js";
 import categoryRoutes from "./routes/category.routes.js";
@@ -8,17 +8,18 @@ import productsRoutes from "./routes/product.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 
 const port = process.env.PORT || 4000;
-const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
+const host = ("VERCEL" in process.env) ? `0.0.0.0` : `localhost`;
 
 const fastify = Fastify({ logger: true });
-// start my server
 
-fastify.register(todosRoutes,{prefix:"/api"});
-fastify.register(categoryRoutes,{prefix:"/api"});
-fastify.register(productsRoutes,{prefix:"/api"});
-fastify.register(orderRoutes,{prefix:"/api"});
+// Register routes
+fastify.register(todosRoutes, { prefix: "/api" });
+fastify.register(categoryRoutes, { prefix: "/api" });
+fastify.register(productsRoutes, { prefix: "/api" });
+fastify.register(orderRoutes, { prefix: "/api" });
+
 // List of allowed origins
-const allowedOrigins = ['http://localhost:3000/' , 'https://uniquestorebd.vercel.app/'];
+const allowedOrigins = ['http://localhost:3000', 'https://uniquestorebd.vercel.app'];
 
 fastify.register(cors, {
   origin: (origin, cb) => {
@@ -34,27 +35,26 @@ fastify.register(cors, {
   allowedHeaders: ['Content-Type', 'Authorization'], // Define allowed headers
   credentials: true, // Allow cookies to be sent
 });
-const start  = async () => {
-    
-    await connectDB(process.env.MONGO_URI);
- 
-    fastify.get('/', function (request, reply) {
-        reply.type('text/html').send(html)
-      })
-      
-    await fastify.listen({
-        port: port || 4000, host: host
-        
-    },(err,addr)=>{
-        if (err) {
-            console.log(err)
-        }
-    });
-    fastify.log.info(`server listening on ${fastify.server.address()}`);
-}    
+
+const start = async () => {
+  await connectDB(process.env.MONGO_URI);
+
+  fastify.get('/', function (request, reply) {
+    reply.type('text/html').send(html);
+  });
+
+  await fastify.listen({
+    port: port || 4000,
+    host: host
+  }, (err, addr) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+  fastify.log.info(`server listening on ${fastify.server.address()}`);
+};
+
 start();
-
-
 
 const html = `
 <!DOCTYPE html>
@@ -113,4 +113,4 @@ const html = `
     </section>
   </body>
 </html>
-`
+`;
