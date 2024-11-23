@@ -18,7 +18,7 @@ fastify.register(categoryRoutes,{prefix:"/api"});
 fastify.register(productsRoutes,{prefix:"/api"});
 fastify.register(orderRoutes,{prefix:"/api"});
 // List of allowed origins
-const allowedOrigins = ['http://localhost:3000' , 'https://uniquestorebd.vercel.app/'];
+const allowedOrigins = ['http://localhost:3000/' , 'https://uniquestorebd.vercel.app/'];
 
 fastify.register(cors, {
   origin: (origin, cb) => {
