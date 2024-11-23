@@ -1,22 +1,16 @@
 import 'dotenv/config';
 import Fastify from 'fastify';
 import { connectDB } from './config/connect.js';
-import cors from "@fastify/cors";
-import todosRoutes from "./routes/todo.routes.js";
-import categoryRoutes from "./routes/category.routes.js";
-import productsRoutes from "./routes/product.routes.js";
-import orderRoutes from "./routes/order.routes.js";
+import cors from '@fastify/cors';
+import todosRoutes from './routes/todo.routes.js';
+import categoryRoutes from './routes/category.routes.js';
+import productsRoutes from './routes/product.routes.js';
+import orderRoutes from './routes/order.routes.js';
 
 const port = process.env.PORT || 4000;
 const host = ("VERCEL" in process.env) ? `0.0.0.0` : `localhost`;
 
 const fastify = Fastify({ logger: true });
-
-// Register routes
-fastify.register(todosRoutes, { prefix: "/api" });
-fastify.register(categoryRoutes, { prefix: "/api" });
-fastify.register(productsRoutes, { prefix: "/api" });
-fastify.register(orderRoutes, { prefix: "/api" });
 
 // List of allowed origins
 const allowedOrigins = ['http://localhost:3000', 'https://uniquestorebd.vercel.app'];
@@ -36,6 +30,12 @@ fastify.register(cors, {
   credentials: true, // Allow cookies to be sent
 });
 
+// Register routes
+fastify.register(todosRoutes, { prefix: '/api' });
+fastify.register(categoryRoutes, { prefix: '/api' });
+fastify.register(productsRoutes, { prefix: '/api' });
+fastify.register(orderRoutes, { prefix: '/api' });
+
 const start = async () => {
   await connectDB(process.env.MONGO_URI);
 
@@ -43,15 +43,13 @@ const start = async () => {
     reply.type('text/html').send(html);
   });
 
-  await fastify.listen({
-    port: port || 4000,
-    host: host
-  }, (err, addr) => {
+  await fastify.listen({ port: port, host: host }, (err, addr) => {
     if (err) {
       console.log(err);
+      process.exit(1);
     }
+    fastify.log.info(`Server listening on ${addr}`);
   });
-  fastify.log.info(`server listening on ${fastify.server.address()}`);
 };
 
 start();
@@ -109,7 +107,7 @@ const html = `
   </head>
   <body>
     <section>
-      <a href="/">Hello from Vercel, Rest api ready for use !  Unique Store Bd</a>
+      <a href="/">Hello from Vercel, Rest api ready for use! Unique Store Bd</a>
     </section>
   </body>
 </html>
