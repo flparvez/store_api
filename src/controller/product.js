@@ -1,4 +1,5 @@
 import {Product} from '../models/product.models.js';
+import {Category} from '../models/category.models.js';
 import slugify from 'slugify';
 // Get all products
 export const getAllProducts = async (request, reply) => {
@@ -83,17 +84,3 @@ export const deleteProduct = async (request, reply) => {
     reply.status(500).send({ error: 'Failed to delete product' });
   }
 };
-
-export const getProductsByCategory=async(request, reply) => {
-  // endpoints: api/products/category/673f16ba2cc9739cc4a031ec
-  try {
-    const products = await Product.find({ category: request.params.categoryId }).populate('category');
-    if (!products.length) {
-      reply.status(404).send({ message: 'No products found for this category' });
-    } else {
-      reply.send(products);
-    }
-  } catch (error) {
-    reply.status(500).send(error);
-  }
-}
