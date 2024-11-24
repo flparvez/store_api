@@ -27,7 +27,7 @@ export const getOrderById = async (request, reply) => {
 export const createOrder = async (request, reply) => {
   try {
 
-    const {name,email,phone,address,city,user,items,total}= request.body
+    const {name,email,phone,address,city,user,items,total,transaction}= request.body
     const order = new Order({
       name,
       email,
