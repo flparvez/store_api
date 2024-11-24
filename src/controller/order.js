@@ -26,7 +26,20 @@ export const getOrderById = async (request, reply) => {
 // Create a new order
 export const createOrder = async (request, reply) => {
   try {
-    const order = new Order(request.body);
+
+    const {name,email,phone,address,city,user,items,total}= request.body
+    const order = new Order({
+      name,
+      email,
+      phone,
+      address,
+      city,
+      user,
+      products:items,
+      total
+    });
+
+
     const savedOrder = await order.save();
     reply.status(201).send(savedOrder);
   } catch (error) {
