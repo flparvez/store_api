@@ -33,17 +33,21 @@ export async function createCategory(request, reply) {
 
 export async function updateCategory(request, reply) {
   try {
-    const category = await Category.findOneAndUpdate({ slug: request.params.slug }, request.body, { new: true });
+    const { slug } = request.params;
+    const updateData = request.body;
+
+    const category = await Category.findOneAndUpdate({ slug }, updateData, { new: true });
+
     if (!category) {
-      reply.status(404).send({ message: 'Category not found' });
+      reply.code(404).send({ message: 'Category not found' });
     } else {
-      reply.status(200).send(category);
+      reply.code(200).send(category);
     }
   } catch (error) {
-    reply.status(500).send(error);
+    console.error('Error updating category:', error);
+    reply.code(500).send({ error: 'Failed to update category', details: error.message });
   }
 }
-
 export async function deleteCategory(request, reply) {
   try {
     const category = await Category.findByIdAndDelete(request.params.id);
