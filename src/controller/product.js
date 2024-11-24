@@ -84,3 +84,20 @@ export const deleteProduct = async (request, reply) => {
     reply.status(500).send({ error: 'Failed to delete product' });
   }
 };
+
+// Search products
+export const searchProducts = async (request, reply) => {
+  try {
+    const { query } = request.query;
+
+    // Perform a search using a case-insensitive regex
+    const products = await Product.find({
+      name: { $regex: query, $options: 'i' }
+    }).populate('category user');
+
+    reply.send(products);
+  } catch (error) {
+    reply.status(500).send({ error: 'Failed to search products' });
+  }
+};
+
