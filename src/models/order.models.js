@@ -7,12 +7,8 @@ const orderSchema= new mongoose.Schema({
         phone: { type: Number, required: true },
         address: { type: String, required: true },
         city: { type: String, required: true },
-      
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-           
-          },
+        user: { type:String},
+        
     
      products: [],  // Array of product details
     
