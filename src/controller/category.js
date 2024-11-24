@@ -33,13 +33,13 @@ export async function createCategory(request, reply) {
 
 export async function updateCategory(request, reply) {
   try {
-    const { slug } = request.params;
+   const slug =request.params.id
     const updateData = request.body;
 
     const category = await Category.findOneAndUpdate({ slug }, updateData, { new: true });
 
     if (!category) {
-      reply.code(404).send({ message: 'Category not found' });
+      reply.code(404).send({ message: 'Category not found, slug: ' + slug });
     } else {
       reply.code(200).send(category);
     }
