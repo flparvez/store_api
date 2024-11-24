@@ -23,11 +23,13 @@ export const getOrderById = async (request, reply) => {
   }
 };
 
+
+
 // Create a new order
 export const createOrder = async (request, reply) => {
   try {
+    const { name, email, phone, address, city, user, items, total, transaction } = request.body;
 
-    const {name,email,phone,address,city,user,items,total,transaction}= request.body
     const order = new Order({
       name,
       email,
@@ -35,17 +37,19 @@ export const createOrder = async (request, reply) => {
       address,
       city,
       user,
-      products:items,
-      total
+      products: items,
+      total,
+      transaction, // Add transaction if you need to save it
     });
 
-
     const savedOrder = await order.save();
-    reply.status(201).send(savedOrder);
+    reply.code(201).send(savedOrder); // Fastify uses reply.code instead of reply.status
   } catch (error) {
-    reply.status(500).send({ error: 'Failed to create order',error });
+    console.error('Error creating order:', error);
+    reply.code(500).send({ error: 'Failed to create order', details: error.message });
   }
 };
+
 
 // Update an existing order
 export const updateOrder = async (request, reply) => {
