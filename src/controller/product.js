@@ -1,10 +1,11 @@
 import {Product} from '../models/product.models.js';
-import {Category} from '../models/category.models.js';
+
 import slugify from 'slugify';
 // Get all products
 export const getAllProducts = async (request, reply) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 });
+    
+    const products = await Product.find().sort({ createdAt: -1 }).populate('category');
     reply.send(products);
   } catch (error) {
     reply.status(500).send({ error: 'Failed to fetch products' });
