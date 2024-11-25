@@ -4,7 +4,7 @@ import slugify from 'slugify';
 // Get all products
 export const getAllProducts = async (request, reply) => {
   try {
-    const products = await Product.find().populate('category user');
+    const products = await Product.find().sort({ createdAt: -1 });
     reply.send(products);
   } catch (error) {
     reply.status(500).send({ error: 'Failed to fetch products' });
