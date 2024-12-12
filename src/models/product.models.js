@@ -4,6 +4,7 @@ import slugify from 'slugify';
 const ProductSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    sname: { type: String},
     slug: {
       type: String,
       unique: true,   // Slug should be unique
