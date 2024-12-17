@@ -30,7 +30,7 @@ export const getProductById = async (request, reply) => {
 // Get a single product by slug
 export const getProductBySlug = async (request, reply) => {
   try {
-    const product = await Product.findOne({ slug: request.params.slug });
+    const product = await Product.findOne({ slug: request.params.slug }).populate('category');
     if (!product) {
       return reply.status(404).send({ error: 'Product not found' });
     }
