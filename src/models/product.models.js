@@ -1,5 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import slugify from 'slugify';
+const imageSchema = new Schema({
+  url: { type: String, required: true },
+  public_id: { type: String, required: true }
+});
 
 const ProductSchema = new mongoose.Schema(
   {
@@ -21,7 +25,7 @@ const ProductSchema = new mongoose.Schema(
       required: true
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', },
-    images: { type: String },
+    images: { type: [imageSchema], required: true },
     video: { type: String },
     stock: { type: Number, required: true, default: 0 },
     sold: { type: Number, default: 0 },

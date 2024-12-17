@@ -28,7 +28,7 @@ export const getOrderById = async (request, reply) => {
 // Create a new order
 export const createOrder = async (request, reply) => {
   try {
-    const { name, email, phone, address, city, user, items, total, transaction } = request.body;
+    const { name, email, phone, address, city, user, items, total, transaction,paymentType } = request.body;
 
     const order = new Order({
       name,
@@ -39,6 +39,7 @@ export const createOrder = async (request, reply) => {
       user,
       products: items,
       total,
+      paymentType,
       transaction, // Add transaction if you need to save it
     });
 

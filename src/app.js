@@ -7,7 +7,7 @@ import categoryRoutes from './routes/category.routes.js';
 import productsRoutes from './routes/product.routes.js';
 import orderRoutes from './routes/order.routes.js';
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 const host = ("VERCEL" in process.env) ? `0.0.0.0` : `localhost`;
 
 const fastify = Fastify({ logger: true });

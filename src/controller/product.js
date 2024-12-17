@@ -4,9 +4,12 @@ import slugify from 'slugify';
 // Get all products
 export const getAllProducts = async (request, reply) => {
   try {
-    
-    const products = await Product.find().sort({ createdAt: -1 }).populate('category');
-    reply.send(products);
+    // Fetch all products, populating the 'images' field with the related data
+    const products = await Product.find().populate('category')
+      .populate("images")  // Populate the 'images' field with full image data
+      .sort({ createdAt: -1 })  // Optional: Sort by creation date, descending
+
+    reply.send(products);  // Send the products as the response
   } catch (error) {
     reply.status(500).send({ error: 'Failed to fetch products' });
   }
@@ -15,7 +18,7 @@ export const getAllProducts = async (request, reply) => {
 // // Get a single product by ID
 export const getProductById = async (request, reply) => {
   try {
-    const product = await Product.findById(request.params.id).populate('category user');
+    const product = await Product.findById(request.params.id).populate('category');
     if (!product) {
       return reply.status(404).send({ error: 'Product not found' });
     }

@@ -15,7 +15,7 @@ const orderSchema= new mongoose.Schema({
         total: { type: Number},
     
         status: { type: String, enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'], default: 'pending' },
-        paymentType: { type: String, enum: ['full', 'partial', ]},
+        paymentType: { type: String},
         transaction: { type: String, required: true },
         ordertrack: { type: String, default: '/test/order' },
         // add
