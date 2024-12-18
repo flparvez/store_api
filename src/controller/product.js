@@ -7,7 +7,7 @@ export const getAllProducts = async (request, reply) => {
     // Fetch all products, populating the 'images' field with the related data
     const products = await Product.find().populate('category')
       .populate("images")  // Populate the 'images' field with full image data
-      .sort({ createdAt: -1 })  // Optional: Sort by creation date, descending
+      .sort({ updatedAt: -1 })  // Optional: Sort by creation date, descending
 
     reply.send(products);  // Send the products as the response
   } catch (error) {
