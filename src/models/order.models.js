@@ -1,12 +1,15 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from 'uuid';
+// Helper function to generate a random 4-digit order ID
+const generateOrderId = () => {
+  return Math.floor(1000 + Math.random() * 9000); // Generates a random 4-digit number between 1000 and 9999
+};
 
 const orderSchema= new mongoose.Schema({
-  orderId: { 
-    type: String, 
-    required: true, 
-    unique: true, 
-    default: () => `ORD-${uuidv4()}-${Date.now()}` // Generate a unique order ID with UUID and timestamp
+  orderId: {
+    type: Number,
+    required: true,
+    unique: true,
+    default: generateOrderId, // Call the helper function to generate orderId
   },
         name: { type: String, required: true },
         email: { type: String },
