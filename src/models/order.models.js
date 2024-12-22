@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
-
+import { v4 as uuidv4 } from 'uuid';
 
 const orderSchema= new mongoose.Schema({
+  orderId: { 
+    type: String, 
+    required: true, 
+    unique: true, 
+    default: () => `ORD-${uuidv4()}-${Date.now()}` // Generate a unique order ID with UUID and timestamp
+  },
         name: { type: String, required: true },
         email: { type: String },
         phone: { type: Number, required: true },
