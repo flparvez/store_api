@@ -3,7 +3,7 @@ import {Order} from '../models/order.models.js';
 // Get all orders
 export const getAllOrders = async (request, reply) => {
   try {
-    const orders = await Order.find().populate('user products.product');
+    const orders = await Order.find().populate().sort({ updatedAt: -1 });
     reply.send(orders);
   } catch (error) {
     reply.status(500).send({ error: 'Failed to fetch orders' });

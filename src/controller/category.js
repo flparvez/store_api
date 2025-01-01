@@ -2,7 +2,7 @@ import {Category} from '../models/category.models.js';
 
 export async function getAllCategories(request, reply) {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().sort({ updatedAt: -1 });
     reply.send(categories);
   } catch (error) {
     reply.status(500).send(error);
