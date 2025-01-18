@@ -2,20 +2,22 @@ import {Product} from '../models/product.models.js';
 
 import slugify from 'slugify';
 // Get all products
-export const getAllProducts = async (request, reply) => {
+export const getLatestProducts = async (request, reply) => {
   try {
-    // Fetch all products, populating the 'images' field with the related data
-    const products = await Product.find().populate('category')
-      .populate("images")  // Populate the 'images' field with full image data
-      .sort({ updatedAt: -1 })  // Optional: Sort by creation date, descending
+    // Fetch products sorted by `lastUpdatedIndex` (descending order)
+    const latestProducts = await Product.find()
+      .populate('category') // Populate the 'category' field
+      .populate('images')   // Populate the 'images' field
+      .sort({ lastUpdatedIndex: -1 }) // Sort by the manually updated field
+  
 
-    reply.send(products);  // Send the products as the response
+    reply.send(latestProducts); // Send the sorted products as the response
   } catch (error) {
-    reply.status(500).send({ error: 'Failed to fetch products' });
+    reply.status(500).send({ error: 'Failed to fetch latest products' });
   }
 };
 
-// // Get a single product by ID
+// // Get a single product by IDz
 export const getProductById = async (request, reply) => {
   try {
     const product = await Product.findById(request.params.id).populate('category');
