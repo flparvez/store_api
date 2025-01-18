@@ -2,7 +2,7 @@ import {Product} from '../models/product.models.js';
 
 import slugify from 'slugify';
 // Get all products
-export const getLatestProducts = async (request, reply) => {
+export const getAllProducts = async (request, reply) => {
   try {
     // Fetch products sorted by `lastUpdatedIndex` (descending order)
     const latestProducts = await Product.find()
