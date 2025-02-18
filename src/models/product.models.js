@@ -32,6 +32,7 @@ const ProductSchema = new mongoose.Schema(
     sold: { type: Number, default: 0 },
     tags: { type: [String] },
     warrenty: { type: String },
+    advanced: { type: Number, default:100 },
     lastUpdatedIndex: {
       type: Number,
       default: 0, // Default priority is 0
